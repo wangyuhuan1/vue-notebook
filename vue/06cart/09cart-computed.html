@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <meta name=referrer content=never>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <style>
+        img{
+            width:70px;
+            height:100px
+        }
+        .count{
+            width:50px
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 class="text-center text-success">购物车</h1>
+        
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td>全选 <input type="checkbox" v-model="checkAll"> </td>
+                    <td>商品</td>
+                    <td>单价</td>
+                    <td>数量</td>
+                    <td>小计</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item,index) of products">
+                    <td>
+                        <input type="checkbox" v-model="item.isSelected">
+                    </td>
+                    <td>
+                        <img :src="item.productCover" alt="">
+                        {{item.productName}}
+                    </td>
+                    <td>{{item.productPrice}}</td>
+                    <td><input class="count" type="number" min="1" v-model.bumber="item.productCount"/></td>
+                    <td>{{item.productPrice*item.productCount | format(2)}}</td>
+                    <td>
+                        <button @click="handleDel(index,item)" class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>总价格：{{sum | format(2)}}</p>
+        
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                products:[],
+            },
+            mounted(){
+                axios.get('./data/carts.json').then(res=>{
+                    console.log(res)
+                    this.products=res.data
+                    console.log(this.products)
+                })
+            },
+            filters:{
+                format(val,params){
+                    return "$"+val.toFixed(params)
+                }
+            },
+            computed:{
+                checkAll:{
+                    get(){
+                        return this.products.every(item=>item.isSelected)
+                    },
+                    set(val){
+                        this.products.forEach(item=>item.isSelected=val)
+                    }
+                },
+                sum(){
+                    // alert(1)
+                    var total=0;
+                    this.products.forEach(item=>{
+                        total=item.productCount*item.productPrice+total
+                    })
+                    return total
+                }
+            },
+            methods:{
+                handleDel(index,item){
+                    console.log(index)
+                    console.log(item)
+                    // this.products.splice(index,1)
+                    var products=this.products.filter(value=>value!==item)
+                    this.products=products
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=0fc7e35a50e2c2698ffe179ce3ac4530"></script>
+    <title>Document</title>
+    <style>
+        #container {
+            width: 300px;
+            height: 180px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+    </div>
+    <script>
+        var map = new AMap.Map('container', {
+            zoom: 11,//级别
+            center: [116.397428, 39.90923],//中心点坐标
+            viewMode: '3D'//使用3D视图
+        });
+    </script>
+</body>
+
+</html>

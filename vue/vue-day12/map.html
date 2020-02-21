@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript"
+        src="http://api.map.baidu.com/api?v=2.0&ak=co7DcYjRcmGoNN9FHIi3oDl5Tw9iCEON"></script>
+    <style>
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+        }
+
+        #container {
+            height: 100%
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        // 百度地图API功能
+        var map = new BMap.Map("container");
+        map.centerAndZoom(new BMap.Point(114.510917, 30.558529), 20);
+        var top_left_control = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_TOP_LEFT });// 左上角，添加比例尺
+        var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+        var top_right_navigation = new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL }); //右上角，仅包含平移和缩放按钮
+        map.addControl(top_left_control);
+        map.addControl(top_left_navigation);
+        map.addControl(top_right_navigation);    
+    </script>
+</body>
+
+</html>
